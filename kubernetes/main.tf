@@ -40,10 +40,6 @@ module "gke" {
   ip_range_pods          = "k8s-subnetwork-pods"
   ip_range_services      = "k8s-subnetwork-services"
   create_service_account = true
-
-  node_pools = [
-
-  ]
 }
 
 resource "helm_release" "cert_manager" {
