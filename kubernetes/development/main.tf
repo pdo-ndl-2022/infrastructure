@@ -1,13 +1,39 @@
+resource "google_compute_network" "ndi" {
+  name                    = "development-vpc"
+  auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "pdo_subnet" {
+  name          = "dev-subnet"
+  ip_cidr_range = "10.2.0.0/16"
+  region        = "europe-west1"
+  network       = google_compute_network.ndi.id
+}
+
+resource "google_compute_subnetwork" "pdo_subnet_pods" {
+  name          = "dev-subnet-pods"
+  ip_cidr_range = "10.3.0.0/16"
+  region        = "europe-west1"
+  network       = google_compute_network.ndi.id
+}
+
+resource "google_compute_subnetwork" "pdo_subnet_services" {
+  name          = "dev-subnet-services"
+  ip_cidr_range = "10.4.0.0/16"
+  region        = "europe-west1"
+  network       = google_compute_network.ndi.id
+}
+
 module "gke" {
   source                     = "terraform-google-modules/kubernetes-engine/google"
   project_id                 = "pdo-ndl-2022"
   name                       = "development"
   region                     = "europe-west1"
   zones                      = ["europe-west1-b", "europe-west1-c", "europe-west1-d"]
-  network                    = "vpc-01"
-  subnetwork                 = "us-central1-01"
-  ip_range_pods              = "us-central1-01-gke-01-pods"
-  ip_range_services          = "us-central1-01-gke-01-services"
+  network                    = google_compute_network.ndi.name
+  subnetwork                 = google_compute_subnetwork.pdo_subnet.name
+  ip_range_pods              = google_compute_subnetwork.pdo_subnet_pods.name
+  ip_range_services          = google_compute_subnetwork.pdo_subnet_services.name
   http_load_balancing        = false
   network_policy             = false
   horizontal_pod_autoscaling = true
@@ -15,9 +41,9 @@ module "gke" {
 
   node_pools = [
     {
-      name               = "default-node-pool"
+      name               = "pdo-node-pool"
       machine_type       = "e2-medium"
-      node_locations     = "us-central1-b,us-central1-c"
+      node_locations     = "europe-west1-b, europe-west1-b"
       min_count          = 1
       max_count          = 100
       local_ssd_count    = 0
@@ -29,7 +55,7 @@ module "gke" {
       enable_gvnic       = false
       auto_repair        = true
       auto_upgrade       = true
-      service_account    = "project-service-account@<PROJECT ID>.iam.gserviceaccount.com"
+      service_account    = "project-service-account@pdo-ndl-2022.iam.gserviceaccount.com"
       preemptible        = false
       initial_node_count = 80
     },
@@ -39,42 +65,6 @@ module "gke" {
     all = [
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
-    ]
-  }
-
-  node_pools_labels = {
-    all = {}
-
-    default-node-pool = {
-      default-node-pool = true
-    }
-  }
-
-  node_pools_metadata = {
-    all = {}
-
-    default-node-pool = {
-      node-pool-metadata-custom-value = "my-node-pool"
-    }
-  }
-
-  node_pools_taints = {
-    all = []
-
-    default-node-pool = [
-      {
-        key    = "default-node-pool"
-        value  = true
-        effect = "PREFER_NO_SCHEDULE"
-      },
-    ]
-  }
-
-  node_pools_tags = {
-    all = []
-
-    default-node-pool = [
-      "default-node-pool",
     ]
   }
 }

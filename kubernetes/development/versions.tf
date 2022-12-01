@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket = "tf-state-pdo-ndl-2022"
+    bucket = "tf-state-ndl-2022"
     prefix = "kubernetes/development/state"
   }
 }
