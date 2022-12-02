@@ -21,9 +21,9 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
-    - host: app.ndl.thomasgouveia.fr
+    - host: web3.ndl.thomasgouveia.fr
       paths:
-        - path: /ts
+        - path: /*
           pathType: ImplementationSpecific
   tls:
     - secretName: web3-tls
