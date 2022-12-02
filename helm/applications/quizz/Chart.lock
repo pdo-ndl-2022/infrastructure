@@ -1,0 +1,6 @@
+dependencies:
+- name: service
+  repository: https://polyflix.github.io/helm-charts
+  version: 0.1.1
+digest: sha256:ad86722de0ef659c60017f1b87b0ffc5bd5580241eefd7953a57f5ffdb42d018
+generated: "2022-12-02T06:37:21.804292465+01:00"
