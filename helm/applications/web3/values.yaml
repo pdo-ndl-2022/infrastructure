@@ -1,0 +1,32 @@
+# Set global values
+global:
+fullnameOverride: web3
+
+# Override polyflix service
+web3:
+  image:
+    repository: ghcr.io/pdo-ndl-2022/web3
+    tag: main
+  service:
+    port: 8080
+
+# Set service port for ingress local template
+service:
+  port: 8080
+
+# Set ingress values
+ingress:
+  enabled: true
+  annotations:
+    {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: app.ndl.thomasgouveia.fr
+      paths:
+        - path: /ts
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
