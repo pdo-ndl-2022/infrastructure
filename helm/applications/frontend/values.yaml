@@ -1,13 +1,19 @@
-# Override polyflix service
-# ndl.thomasgouveia.fr
-
+# Set global vallues
 global:
   fullnameOverride: frontend
 
-services:
+# Override polyflix service
+frontend:
   image:
     repository: ghcr.io/pdo-ndl-2022/frontend
     tag: main
+  extraEnvVars:
+    - name: "PORT"
+      value: 8080
+
+# Set ingress values
+service:
+  port: 8080
 
 ingress:
   enabled: true
