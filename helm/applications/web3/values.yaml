@@ -28,4 +28,4 @@ ingress:
   tls:
     - secretName: web3-tls
       hosts:
-        - app.ndl.thomasgouveia.fr
+        - web3.ndl.thomasgouveia.fr
