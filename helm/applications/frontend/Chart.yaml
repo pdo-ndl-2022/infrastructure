@@ -27,3 +27,4 @@ dependencies:
   - name: service
     version: "0.1.1"
     repository: "https://polyflix.github.io/helm-charts"
+    alias: frontend
