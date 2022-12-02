@@ -5,7 +5,7 @@ fullnameOverride: quizz
 # Override polyflix service
 quizz:
   image:
-    repository: ghcr.io/pdo-ndl-2022/quizz
+    repository: protocole/pdo-22-quizz
     tag: main
   service:
     port: 8080
