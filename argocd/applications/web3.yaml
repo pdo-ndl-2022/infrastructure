@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: web3
+  namespace: argo-cd
+spec:
+  project: default
+  source:
+    path: helm/applications/web3
+    repoURL: https://github.com/pdo-ndl-2022/infrastructure.git
+    targetRevision: HEAD
+    helm:
+      releaseName: web3
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: argo-cd
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
