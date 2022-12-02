@@ -26,8 +26,8 @@ ingress:
   hosts:
     - host: app.ndl.thomasgouveia.fr
       paths:
-        - path: /*
-          pathType: ImplementationSpecific
+        - path: /
+          pathType: Prefix
   tls:
     - secretName: app-tls
       hosts:

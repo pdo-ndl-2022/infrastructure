@@ -23,8 +23,8 @@ ingress:
   hosts:
     - host: web3.ndl.thomasgouveia.fr
       paths:
-        - path: /*
-          pathType: ImplementationSpecific
+        - path: /
+          pathType: Prefix
   tls:
     - secretName: web3-tls
       hosts:

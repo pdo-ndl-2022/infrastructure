@@ -48,8 +48,8 @@ ingress:
   hosts:
     - host: learning.ndl.thomasgouveia.fr
       paths:
-        - path: /*
-          pathType: ImplementationSpecific
+        - path: /
+          pathType: Prefix
   tls:
     - secretName: learning-tls
       hosts:
