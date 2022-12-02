@@ -1,0 +1,57 @@
+# Set global values
+global:
+fullnameOverride: learning
+
+# Override polyflix service
+learning:
+  image:
+    repository: ghcr.io/pdo-ndl-2022/learning
+    tag: main
+  service:
+    port: 8080
+  extraEnvVars:
+    - name: "PORT"
+      value: 8080
+    - name: NODE_ENV
+      value: "production"
+    - name: "DATABASE_NAME"
+      value: "strapi"
+    - name: "DATABASE_USER"
+      value: "strapi"
+    - name: "DATABASE_PASSWORD"
+      value: "bFTy9kSEbTMFcWS4jcKfFcGL8dIP3VfMwS5VVTQFCOiPXYoDHgJVX7oJn9MlJPsi"
+    - name: "INSTANCE_CONNECTION_NAME"
+      value: "pdo-ndl-2022:europe-west1:production"
+    - name: "APP_KEYS"
+      value: "=cKPrV2OffTBhJjMXWOR99w==,5Xb6VhZuUxp4DtvZZPBzIA==,h1qKCIhL9FCK/wXCoAo7vQ==,Ep0Bcxr258zSv4MclEQUwg=="
+    - name: "API_TOKEN_SALT"
+      value: "Cy1EmzdOUpfbsily5q0vkw=="
+    - name: "ADMIN_JWT_SECRET"
+      value: "RAfZMrPz/xouN6bc+A2pnQ=="
+    - name: "DATABASE_CLIENT"
+      value: "postgresql"
+    - name: "DATABASE_PORT"
+      value: 5432
+    - name: "JWT_SECRET"
+      value: "tobemodified"
+
+# Set service port for ingress local template
+service:
+  port: 8080
+
+# Set ingress values
+ingress:
+  enabled: true
+  annotations:
+    {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: learning.ndl.thomasgouveia.fr
+      paths:
+        - path: /*
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
