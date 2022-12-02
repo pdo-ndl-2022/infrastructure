@@ -5,7 +5,7 @@ fullnameOverride: quizz
 # Override polyflix service
 quizz:
   image:
-    repository: protocole/pdo-22-quizz
+    repository: docker.io/kxlil/quizz
     tag: main
   service:
     port: 8080
